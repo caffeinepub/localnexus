@@ -1,0 +1,124 @@
+{
+  "kind": "build_request",
+  "title": "Pre-publish QA pass: fix runtime/build errors and polish for release",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-17",
+      "text": "Run a full pre-publish QA pass and fix any build-time TypeScript errors and runtime console errors across Discovery, Chat, and Games flows so the app is publish-ready.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "Yeah it's great check for any error and final the app for publishing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "`dfx deploy` succeeds without Motoko compilation errors.",
+        "Frontend production build completes without TypeScript errors.",
+        "Navigating between Discovery, Chat, and Games does not throw errors in the browser console during normal use."
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "text": "Fix backend chat and game ID derivation so the same pair of principals always produces the same chat/game ID regardless of caller order (deterministic ordering).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "check for any error and final the app for publishing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "For two principals A and B, getChatId(A,B) equals getChatId(B,A).",
+        "For two principals A and B, getGameId(A,B) equals getGameId(B,A)."
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "text": "Fix backend chat history storage logic so message append/read operations compile and behave correctly with the chosen Motoko collection types (do not rely on non-existent List mutation APIs).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "check for any error"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Sending a message persists it to the correct chat history and it is returned by `getMessages` for both participants.",
+        "Backend compiles successfully with no type errors in chat history code paths.",
+        "`clearMessages` removes the chat history for the caller/receiver pair without trapping for valid participants."
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "text": "Fix incorrect async/mutation usage in the frontend that can cause runtime errors (e.g., awaiting non-async React Query mutate calls) and ensure cleanup logic executes reliably.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "check for any error"
+        ]
+      },
+      "acceptanceCriteria": [
+        "No `await` is used on non-Promise mutation APIs; `mutateAsync` is used when awaiting is needed.",
+        "Disconnect/drop-presence flows complete without throwing and leave the app in a consistent state."
+      ]
+    },
+    {
+      "id": "REQ-21",
+      "text": "Prevent avoidable resource leaks and unstable UI behavior in the chat thread rendering (e.g., ensure any created object URLs for inline images are revoked when no longer needed).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "final the app for publishing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Repeatedly viewing chats with image messages does not continuously increase memory usage due to unreleased object URLs (verified by revoking URLs when appropriate).",
+        "Chat message list renders without warnings/errors during normal use."
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "text": "Clean up or remove empty placeholder frontend modules that are unused, or implement minimal safe stubs if they are imported, so they do not cause confusion or future build issues.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "final the app for publishing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "No empty placeholder files remain that are unused and unreferenced, or they are replaced with minimal documented implementations if referenced.",
+        "Frontend build and linting (if present) do not fail due to unused/empty modules."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify any files under frontend/src/components/ui (read-only UI component sources).",
+    "Do not edit immutable hook entry files listed in SYSTEM_CONTEXT (compose via other files instead).",
+    "Keep all Motoko logic in the single backend actor at backend/main.mo; only add backend/migration.mo if a state upgrade is required."
+  ],
+  "nonGoals": [
+    "Building a native Android app/APK.",
+    "Adding new product features beyond fixing errors, stabilizing behavior, and making the current app publish-ready."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

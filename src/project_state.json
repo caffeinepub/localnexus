@@ -1,0 +1,285 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 7,
+  "summary": "Build \"LocalNexus\" as a web-based React app (Caffeine/Internet Computer) with a Motoko backend—an offline/local-network Android APK is not supported on this platform. Implement Discovery/Chat/Games UI, local persistence, image sharing, typing indicators, and 2‑player mini-games with simulated and/or backend-driven peer behaviors, plus reliability indicators.",
+  "architectural_notes": [
+    "Offline-only: no internet dependency; communication limited to shared Wi‑Fi/mobile hotspot",
+    "Peer discovery via NSD and/or Wi‑Fi Direct; roles must support dynamic host/server vs client behavior",
+    "Networking via sockets (TCP/UDP) for chat/game payloads; image sharing via byte streams",
+    "Persist chat data locally using Room/SQLite",
+    "Use MVVM architecture to separate UI, networking, and persistence layers",
+    "Implement heartbeat mechanism for disconnect/out-of-range detection",
+    "UI built with Material 3 (Material You) including dynamic color, dark mode, and high-contrast light mode",
+    "Platform constraint: this project is a React web app with an Internet Computer (Motoko) backend; native Android APK generation is out of scope for this environment"
+  ],
+  "known_issues": [],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-implement-a-localnexus-web-app-shell-react-tailwind-with-top-level-navigation-between-discovery-chat-and-games-screens-using-only-english-for-user-facing-text",
+      "title": "Implement a LocalNexus web app shell (React + Tailwind) with top-level navigation between: Discovery, Chat, and Games screens, using only English for user-facing text.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-coherent-distinctive-visual-theme-for-localnexus-and-apply-it-consistently-across-all-screens-colors-typography-spacing-surfaces-do-not-use-a-blue-purple-primary-palette",
+      "title": "Create a coherent, distinctive visual theme for LocalNexus and apply it consistently across all screens (colors, typography, spacing, surfaces). Do not use a blue/purple primary palette.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-discovery-screen-build-a-radar-like-animated-ui-that-lists-nearby-devices-and-allows-selecting-a-device-to-connect-using-a-simulated-discovery-data-source-no-real-nsd-wi-fi-direct-include-states-for-scanning-devices-found-connecting-connected-and-disconnected",
+      "title": "Discovery screen: build a radar-like animated UI that lists “nearby devices” and allows selecting a device to connect, using a simulated discovery data source (no real NSD/Wi‑Fi Direct). Include states for: scanning, devices found, connecting, connected, and disconnected.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-chat-screen-implement-a-bubble-style-chat-ui-with-glassmorphism-inspired-message-surfaces-message-timestamps-and-a-typing-indicator-typing-indicator-must-appear-when-the-local-user-is-typing-and-disappear-after-a-short-idle-timeout-simulated-peer-typing-is-acceptable",
+      "title": "Chat screen: implement a bubble-style chat UI with glassmorphism-inspired message surfaces, message timestamps, and a typing indicator. Typing indicator must appear when the local user is typing and disappear after a short idle timeout (simulated peer typing is acceptable).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-chat-image-sharing-allow-attaching-an-image-from-the-device-and-displaying-it-inline-in-the-chat-thread-store-images-locally-in-the-browser-e-g-as-object-urls-base64-and-treat-this-as-the-offline-stand-in-for-sent-via-byte-streams",
+      "title": "Chat image sharing: allow attaching an image from the device and displaying it inline in the chat thread. Store images locally in the browser (e.g., as object URLs/base64) and treat this as the offline stand-in for “sent via byte streams.”",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-offline-persistence-persist-chat-history-and-game-history-locally-in-the-browser-so-it-survives-refresh-reopen-e-g-localstorage-indexeddb-provide-a-ui-control-to-clear-local-data-for-testing",
+      "title": "Offline persistence: persist chat history and game history locally in the browser so it survives refresh/reopen (e.g., localStorage/IndexedDB). Provide a UI control to clear local data (for testing).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-mini-game-implement-2-player-tic-tac-toe-with-a-game-state-json-object-representation-and-a-turn-based-move-system-add-a-challenge-flow-from-the-chat-screen-to-start-a-tic-tac-toe-match-with-the-selected-device-simulated-peer",
+      "title": "Mini-game: implement 2-player Tic-Tac-Toe with a “Game State” JSON object representation and a turn-based move system. Add a “Challenge” flow from the Chat screen to start a Tic-Tac-Toe match with the selected device (simulated peer).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-mini-game-implement-2-player-connect-four-with-a-game-state-json-object-representation-and-turn-based-move-system-add-a-challenge-flow-from-the-chat-screen-to-start-a-connect-four-match-with-the-selected-device-simulated-peer",
+      "title": "Mini-game: implement 2-player Connect Four with a “Game State” JSON object representation and turn-based move system. Add a “Challenge” flow from the Chat screen to start a Connect Four match with the selected device (simulated peer).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-reliability-simulation-implement-a-heartbeat-disconnect-model-in-the-ui-state-that-periodically-updates-a-connection-health-indicator-and-triggers-a-disconnected-state-if-heartbeats-stop-simulated-timer-based-heartbeat",
+      "title": "Reliability simulation: implement a heartbeat/disconnect model in the UI state that periodically updates a “connection health” indicator and triggers a disconnected state if heartbeats stop (simulated timer-based heartbeat).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-required-generated-static-images-to-the-project-under-frontend-public-assets-generated-and-use-them-in-the-ui-e-g-app-logo-in-header-radar-background-in-discovery-game-icons-in-games-list",
+      "title": "Add required generated static images to the project under frontend/public/assets/generated and use them in the UI (e.g., app logo in header, radar background in Discovery, game icons in Games list).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wire-the-frontend-to-use-the-backend-actor-via-the-existing-useactor-hook-for-peer-discovery-presence-refresh-message-send-receive-and-game-session-sync-remove-the-simulated-discovery-source-from-the-main-user-flow",
+      "title": "Wire the frontend to use the backend actor (via the existing useActor hook) for peer discovery, presence refresh, message send/receive, and game session sync; remove the simulated discovery source from the main user flow.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-or-replace-the-placeholder-query-layer-to-define-react-query-hooks-for-backend-driven-peers-messages-and-games-ensure-cache-invalidation-occurs-appropriately-when-identity-changes-or-mutations-complete",
+      "title": "Update or replace the placeholder query layer to define React Query hooks for backend-driven peers, messages, and games; ensure cache invalidation occurs appropriately when identity changes or mutations complete.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-clear-english-user-facing-error-and-loading-states-for-backend-operations-login-required-canister-unavailable-failed-send-oversized-image-peer-offline-without-changing-the-existing-top-level-navigation-structure",
+      "title": "Add clear, English user-facing error and loading states for backend operations (login required, canister unavailable, failed send, oversized image, peer offline) without changing the existing top-level navigation structure.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-run-a-full-pre-publish-qa-pass-and-fix-any-build-time-typescript-errors-and-runtime-console-errors-across-discovery-chat-and-games-flows-so-the-app-is-publish-ready",
+      "title": "Run a full pre-publish QA pass and fix any build-time TypeScript errors and runtime console errors across Discovery, Chat, and Games flows so the app is publish-ready.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-incorrect-async-mutation-usage-in-the-frontend-that-can-cause-runtime-errors-e-g-awaiting-non-async-react-query-mutate-calls-and-ensure-cleanup-logic-executes-reliably",
+      "title": "Fix incorrect async/mutation usage in the frontend that can cause runtime errors (e.g., awaiting non-async React Query mutate calls) and ensure cleanup logic executes reliably.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-prevent-avoidable-resource-leaks-and-unstable-ui-behavior-in-the-chat-thread-rendering-e-g-ensure-any-created-object-urls-for-inline-images-are-revoked-when-no-longer-needed",
+      "title": "Prevent avoidable resource leaks and unstable UI behavior in the chat thread rendering (e.g., ensure any created object URLs for inline images are revoked when no longer needed).",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-clean-up-or-remove-empty-placeholder-frontend-modules-that-are-unused-or-implement-minimal-safe-stubs-if-they-are-imported-so-they-do-not-cause-confusion-or-future-build-issues",
+      "title": "Clean up or remove empty placeholder frontend modules that are unused, or implement minimal safe stubs if they are imported, so they do not cause confusion or future build issues.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Offline local-only device discovery and connection via NSD and/or Wi‑Fi Direct with dynamic host/client roles",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Socket-based messaging layer (TCP/UDP) for chat and data transfer over local network",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Local persistence of chat history using Room/SQLite (offline-first, survives app restarts)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Modern Material 3 UI with dynamic color, dark mode and high-contrast light mode",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Discovery screen with radar-like animation showing nearby devices",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Chat UI with bubble messages, glassmorphism styling, typing indicators, and image sharing via byte streams",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Integrated 2-player Tic-Tac-Toe game over local connection",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Integrated 2-player Connect Four game over local connection",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Game challenge/invite system within chat and JSON-serialized game state sync after each move",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Reliability features: heartbeat/disconnect detection for peers",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Android 13+ permissions handling for nearby connectivity (ACCESS_FINE_LOCATION, NEARBY_WIFI_DEVICES, CHANGE_WIFI_STATE)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Adopt MVVM architecture for clean separation of UI, networking, and data layers",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Make the prototype fully workable end-to-end (replace simulated discovery/connection/peer behaviors with real implementations so two devices can actually discover, connect, chat, share images, and play games)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Implement a Motoko backend in backend/main.mo that supports real multi-user presence, peer discovery, and session management using authenticated principals (Internet Identity).",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add backend support for chat threads between two principals, including sending, listing, and clearing messages; support both text and image payloads with explicit size limits and safe rejection behavior when limits are exceeded.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add backend support for game challenges and turn-based game state synchronization (Tic-Tac-Toe and Connect Four) between two principals, using JSON-serializable game state and enforcing turn order on the backend.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Pre-publish QA pass: check for runtime/build errors, broken flows, and finalize the web app for publishing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Fix backend chat and game ID derivation so the same pair of principals always produces the same chat/game ID regardless of caller order (deterministic ordering).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Fix backend chat history storage logic so message append/read operations compile and behave correctly with the chosen Motoko collection types (do not rely on non-existent List mutation APIs).",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "LocalNexus",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

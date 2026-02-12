@@ -1,0 +1,61 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-12T21:31:38.339Z",
+  "summary": "Diff clearly addresses some frontend runtime stability issues (React Query mutation usage, chat image object URL cleanup) and implements deterministic chat ID ordering in the backend. However, evidence is insufficient/absent in the provided diff summary to confirm deterministic game ID ordering, full chat history storage fixes (append/read/clear), and overall publish-ready QA outcomes (dfx deploy + TS build + no console errors) across all flows.",
+  "missing_requirements": [
+    {
+      "id": "REQ-17",
+      "requirement": "Run a full pre-publish QA pass and fix any build-time TypeScript errors and runtime console errors across Discovery, Chat, and Games flows so the app is publish-ready.",
+      "reason": "The diff shows targeted fixes, but the summary does not provide evidence that a full QA pass was completed or that `dfx deploy` and the frontend production build succeed without errors, nor that Discovery/Chat/Games navigation is free of console errors.",
+      "evidence": [
+        "backend/main.mo (truncated)",
+        "frontend/src/hooks/useQueries.ts (truncated)",
+        "frontend/src/screens/DiscoveryScreen.tsx (truncated)",
+        "frontend/src/screens/ChatScreen.tsx"
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "requirement": "Fix backend chat and game ID derivation so the same pair of principals always produces the same chat/game ID regardless of caller order (deterministic ordering).",
+      "reason": "Deterministic ordering is shown for `getChatId`, but the diff summary does not show any `getGameId` implementation or changes proving `getGameId(A,B) == getGameId(B,A)`.",
+      "evidence": [
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "requirement": "Fix backend chat history storage logic so message append/read operations compile and behave correctly with the chosen Motoko collection types (do not rely on non-existent List mutation APIs).",
+      "reason": "The diff summary shows `chatHistory` as `Map<Text, List.List<Message>>`, but the `sendMessage`, `getMessages`, and `clearMessages` implementations are truncated/omitted, so there is no evidence that append/read/clear are implemented correctly or avoid invalid List mutation APIs.",
+      "evidence": [
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "requirement": "Clean up or remove empty placeholder frontend modules that are unused, or implement minimal safe stubs if they are imported, so they do not cause confusion or future build issues.",
+      "reason": "The diff summary includes modifications to multiple frontend modules, but it does not indicate which (if any) were previously empty placeholders, nor does it show removal of unused placeholders. Evidence is insufficient to confirm this requirement is satisfied project-wide.",
+      "evidence": [
+        "frontend-file-summaries.txt (truncated)"
+      ]
+    }
+  ],
+  "hallucinated_features": [],
+  "confidence": 0.62,
+  "changed_files": [
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/components/chat/MessageBubble.tsx",
+    "frontend/src/components/layout/AppShell.tsx",
+    "frontend/src/hooks/usePersistentState.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/lib/heartbeatSimulation.ts",
+    "frontend/src/lib/imageEncoding.ts",
+    "frontend/src/lib/localPersistence.ts",
+    "frontend/src/lib/simulatedDiscovery.ts",
+    "frontend/src/screens/ChatScreen.tsx",
+    "frontend/src/screens/DiscoveryScreen.tsx",
+    "frontend/src/state/localNexusStore.tsx",
+    "project_state.json"
+  ]
+}
