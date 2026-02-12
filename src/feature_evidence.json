@@ -2,11 +2,9 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-run-a-full-pre-publish-qa-pass-and-fix-any-build-time-typescript-errors-and-runtime-console-errors-across-discovery-chat-and-games-flows-so-the-app-is-publish-ready",
-      "featureTitle": "Run a full pre-publish QA pass and fix any build-time TypeScript errors and runtime console errors across Discovery, Chat, and Games flows so the app is publish-ready.",
+      "featureId": "feature-remove-or-revise-the-discovery-screen-demo-only-note-about-simulated-peer-to-peer-connections-so-that-the-live-app-does-not-present-itself-as-a-simulation",
+      "featureTitle": "Remove or revise the Discovery screen demo-only note about simulated peer-to-peer connections so that the live app does not present itself as a simulation.",
       "files": [
-        "frontend/src/hooks/useQueries.ts",
-        "frontend/src/screens/ChatScreen.tsx",
         "frontend/src/screens/DiscoveryScreen.tsx"
       ],
       "components": [
@@ -18,38 +16,18 @@
         "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-17"
+        "REQ-23"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-fix-incorrect-async-mutation-usage-in-the-frontend-that-can-cause-runtime-errors-e-g-awaiting-non-async-react-query-mutate-calls-and-ensure-cleanup-logic-executes-reliably",
-      "featureTitle": "Fix incorrect async/mutation usage in the frontend that can cause runtime errors (e.g., awaiting non-async React Query mutate calls) and ensure cleanup logic executes reliably.",
+      "featureId": "feature-polish-user-facing-copy-and-presentation-for-publish-readiness-by-removing-informal-placeholder-phrasing-and-replacing-it-with-consistent-professional-english-across-the-main-shell-and-core-screens-discovery-chat-games-without-changing-the-top-level-navigation-structure",
+      "featureTitle": "Polish user-facing copy and presentation for publish readiness by removing informal/placeholder phrasing and replacing it with consistent, professional English across the main shell and core screens (Discovery/Chat/Games) without changing the top-level navigation structure.",
       "files": [
         "frontend/src/components/layout/AppShell.tsx",
-        "frontend/src/hooks/useQueries.ts",
-        "frontend/src/screens/DiscoveryScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-20"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-prevent-avoidable-resource-leaks-and-unstable-ui-behavior-in-the-chat-thread-rendering-e-g-ensure-any-created-object-urls-for-inline-images-are-revoked-when-no-longer-needed",
-      "featureTitle": "Prevent avoidable resource leaks and unstable UI behavior in the chat thread rendering (e.g., ensure any created object URLs for inline images are revoked when no longer needed).",
-      "files": [
-        "frontend/src/components/chat/MessageBubble.tsx",
         "frontend/src/screens/ChatScreen.tsx",
-        "frontend/src/state/localNexusStore.tsx"
+        "frontend/src/screens/DiscoveryScreen.tsx",
+        "frontend/src/screens/GamesScreen.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -60,30 +38,7 @@
         "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-21"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-clean-up-or-remove-empty-placeholder-frontend-modules-that-are-unused-or-implement-minimal-safe-stubs-if-they-are-imported-so-they-do-not-cause-confusion-or-future-build-issues",
-      "featureTitle": "Clean up or remove empty placeholder frontend modules that are unused, or implement minimal safe stubs if they are imported, so they do not cause confusion or future build issues.",
-      "files": [
-        "frontend/src/hooks/usePersistentState.ts",
-        "frontend/src/lib/heartbeatSimulation.ts",
-        "frontend/src/lib/imageEncoding.ts",
-        "frontend/src/lib/localPersistence.ts",
-        "frontend/src/lib/simulatedDiscovery.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-22"
+        "REQ-24"
       ],
       "confidence": "high"
     }

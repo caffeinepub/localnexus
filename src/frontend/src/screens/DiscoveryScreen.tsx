@@ -72,7 +72,7 @@ export default function DiscoveryScreen() {
         <Alert>
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            Please login to discover and connect with peers.
+            Please log in to discover and connect with peers.
           </AlertDescription>
         </Alert>
       </div>
@@ -128,11 +128,11 @@ export default function DiscoveryScreen() {
           ) : (
             <Card>
               <CardContent className="py-12 text-center">
-                <p className="mb-4 text-lg font-medium">
+                <p className="mb-2 text-lg font-medium">
                   {activePeers} peer{activePeers !== 1 ? 's' : ''} online
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Note: Peer-to-peer connections are simulated in this demo. In a production app, you would see a list of available peers here.
+                  Peers are currently connected and available for chat and games.
                 </p>
               </CardContent>
             </Card>

@@ -31,7 +31,7 @@ export default function ChatScreen() {
         <Alert>
           <Info className="h-4 w-4" />
           <AlertDescription>
-            Please login to send and receive messages.
+            Please log in to send and receive messages.
           </AlertDescription>
         </Alert>
       </div>
@@ -46,7 +46,7 @@ export default function ChatScreen() {
           <AlertDescription>
             {connectionState === 'disconnected'
               ? 'Connection lost. Please reconnect from the Discovery screen.'
-              : 'Not connected. Go to Discovery to connect to a peer.'}
+              : 'Not connected. Go to Discovery to connect with a peer.'}
           </AlertDescription>
         </Alert>
       )}

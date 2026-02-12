@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 7,
+  "projectStateVersion": 9,
   "summary": "Build \"LocalNexus\" as a web-based React app (Caffeine/Internet Computer) with a Motoko backend—an offline/local-network Android APK is not supported on this platform. Implement Discovery/Chat/Games UI, local persistence, image sharing, typing indicators, and 2‑player mini-games with simulated and/or backend-driven peer behaviors, plus reliability indicators.",
   "architectural_notes": [
     "Offline-only: no internet dependency; communication limited to shared Wi‑Fi/mobile hotspot",
@@ -13,7 +13,7 @@
     "Platform constraint: this project is a React web app with an Internet Computer (Motoko) backend; native Android APK generation is out of scope for this environment"
   ],
   "known_issues": [],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-implement-a-localnexus-web-app-shell-react-tailwind-with-top-level-navigation-between-discovery-chat-and-games-screens-using-only-english-for-user-facing-text",
@@ -150,6 +150,22 @@
         "REQ-22"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-remove-or-revise-the-discovery-screen-demo-only-note-about-simulated-peer-to-peer-connections-so-that-the-live-app-does-not-present-itself-as-a-simulation",
+      "title": "Remove or revise the Discovery screen demo-only note about simulated peer-to-peer connections so that the live app does not present itself as a simulation.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-polish-user-facing-copy-and-presentation-for-publish-readiness-by-removing-informal-placeholder-phrasing-and-replacing-it-with-consistent-professional-english-across-the-main-shell-and-core-screens-discovery-chat-games-without-changing-the-top-level-navigation-structure",
+      "title": "Polish user-facing copy and presentation for publish readiness by removing informal/placeholder phrasing and replacing it with consistent, professional English across the main shell and core screens (Discovery/Chat/Games) without changing the top-level navigation structure.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -275,6 +291,18 @@
       "reqIds": [
         "REQ-19"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Remove or revise the Discovery screen \"peer-to-peer connections are simulated\" demo note for the production/live app (and optionally make the simulated peer list feel more realistic)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Polish overall UI/UX flow for publish readiness (copy tweaks, consistency pass) and prepare the web app for App Market-style publishing",
+      "reqIds": [],
       "status": "pending"
     }
   ],

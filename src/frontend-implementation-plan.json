@@ -1,120 +1,53 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Pre-publish QA stabilization for Discovery, Chat, and Games",
+  "title": "Remove demo simulation messaging and polish publish-ready copy across core screens",
   "requirements": [
     {
-      "id": "REQ-17",
-      "summary": "Fix remaining frontend build/runtime errors across Discovery, Chat, and Games flows to be publish-ready.",
+      "id": "REQ-23",
+      "summary": "Remove demo-only simulated-connection note from Discovery and replace with a helpful, non-demo status explanation.",
       "acceptanceCriteria": [
-        "Frontend production build completes without TypeScript errors.",
-        "Navigating between Discovery, Chat, and Games does not throw errors in the browser console during normal use."
+        "The text \"Note: Peer-to-peer connections are simulated in this demo. In a production app, you would see a list of available peers here.\" is no longer shown anywhere in the Discovery flow.",
+        "Discovery still renders a helpful, English explanation of the current state (e.g., peers online vs none online) without referring to the app as a demo or simulation.",
+        "No TypeScript errors or runtime console errors are introduced by this change."
       ],
       "file_operations": [
         {
           "path": "frontend/src/screens/DiscoveryScreen.tsx",
           "operation": "modify",
-          "description": "Resolve runtime/console issues uncovered during QA in Discovery flow (including safe presence disconnect behavior) and ensure React Query mutation usage is correct."
+          "description": "Remove the demo/simulation disclaimer copy from the \"found\" state card and replace it with professional, publish-ready Discovery messaging that explains the current state (e.g., peers online vs none online) without calling the app a demo or simulation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "summary": "Polish user-facing copy across Discovery/Chat/Games and the AppShell footer for a professional publish-ready experience without changing top-level navigation.",
+      "acceptanceCriteria": [
+        "User-facing text across Discovery, Chat, Games, and the global AppShell footer reads consistently and professionally (no demo disclaimers).",
+        "Remove the heart emoji from the AppShell footer sentence so the footer reads as plain English.",
+        "All user-facing text remains in English.",
+        "No changes are made to the app’s top-level navigation tabs (Discovery/Chat/Games) or their structure."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/layout/AppShell.tsx",
+          "operation": "modify",
+          "description": "Update footer wording to remove the heart emoji and ensure professional, consistent English; do not change the Discovery/Chat/Games tab labels or navigation structure."
+        },
+        {
+          "path": "frontend/src/screens/DiscoveryScreen.tsx",
+          "operation": "modify",
+          "description": "Polish Discovery screen user-facing copy for consistency and professionalism (e.g., \"log in\" phrasing, status messages) while preserving existing UI flow and without adding new navigation."
         },
         {
           "path": "frontend/src/screens/ChatScreen.tsx",
           "operation": "modify",
-          "description": "Resolve runtime/console issues uncovered during QA in Chat flow (including safe image handling and stable rendering) and ensure no resource leaks occur during normal navigation."
+          "description": "Polish Chat screen user-facing copy for consistent, professional English (e.g., authentication and connection guidance text) without altering the screen structure or navigation."
         },
         {
           "path": "frontend/src/screens/GamesScreen.tsx",
           "operation": "modify",
-          "description": "Resolve runtime/console issues uncovered during QA in Games flow (robust handling of absent/corrupted game state) and ensure navigation does not produce console errors."
-        },
-        {
-          "path": "frontend/src/hooks/useQueries.ts",
-          "operation": "modify",
-          "description": "Align React Query hooks with intended usage patterns for mutations/queries to avoid TypeScript/runtime errors during QA verification."
-        }
-      ]
-    },
-    {
-      "id": "REQ-20",
-      "summary": "Fix incorrect async/mutation usage and ensure cleanup logic is reliable (presence disconnect/drop).",
-      "acceptanceCriteria": [
-        "No `await` is used on non-Promise mutation APIs; `mutateAsync` is used when awaiting is needed.",
-        "Disconnect/drop-presence flows complete without throwing and leave the app in a consistent state."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/screens/DiscoveryScreen.tsx",
-          "operation": "modify",
-          "description": "Replace incorrect `await dropPresence.mutate()` usage with `mutateAsync` (or equivalent promise-based flow), add error handling, and ensure disconnect/reset order leaves UI state consistent."
-        },
-        {
-          "path": "frontend/src/hooks/useQueries.ts",
-          "operation": "modify",
-          "description": "Ensure the exported mutation hooks support promise-based flows consistently (use `mutateAsync` from React Query where awaiting is needed) and that returned types align with usage sites."
-        },
-        {
-          "path": "frontend/src/components/layout/AppShell.tsx",
-          "operation": "modify",
-          "description": "Verify app-level data reset/cleanup behavior (React Query cache clearing + local state reset) does not race with ongoing queries/mutations and does not produce console errors when used during QA."
-        }
-      ]
-    },
-    {
-      "id": "REQ-21",
-      "summary": "Prevent resource leaks and unstable UI behavior in chat thread rendering (revoke object URLs for images).",
-      "acceptanceCriteria": [
-        "Repeatedly viewing chats with image messages does not continuously increase memory usage due to unreleased object URLs (verified by revoking URLs when appropriate).",
-        "Chat message list renders without warnings/errors during normal use."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/screens/ChatScreen.tsx",
-          "operation": "modify",
-          "description": "Stop creating object URLs inline during render; instead pass image payload data to a component/hook that manages URL lifecycle and triggers revocation during unmount/message changes."
-        },
-        {
-          "path": "frontend/src/components/chat/MessageBubble.tsx",
-          "operation": "modify",
-          "description": "Manage image object URL creation and revocation with React lifecycle (create when payload present, revoke on cleanup) to prevent memory leaks and remove rendering-time side effects."
-        },
-        {
-          "path": "frontend/src/state/localNexusStore.tsx",
-          "operation": "modify",
-          "description": "Adjust the UI message type (if needed) to support safe passing of image payload data or derived URL while keeping typings consistent across ChatScreen and MessageBubble."
-        }
-      ]
-    },
-    {
-      "id": "REQ-22",
-      "summary": "Remove or replace empty placeholder frontend modules with minimal safe, documented stubs to avoid future build issues.",
-      "acceptanceCriteria": [
-        "No empty placeholder files remain that are unused and unreferenced, or they are replaced with minimal documented implementations if referenced.",
-        "Frontend build and linting (if present) do not fail due to unused/empty modules."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/usePersistentState.ts",
-          "operation": "modify",
-          "description": "Replace the empty module with a minimal, documented `usePersistentState` implementation (e.g., localStorage-backed state) or a clearly documented noop that is safe if imported."
-        },
-        {
-          "path": "frontend/src/lib/heartbeatSimulation.ts",
-          "operation": "modify",
-          "description": "Replace the empty module with a minimal, documented stub (e.g., start/stop heartbeat simulation functions) that is safe if imported and does not introduce runtime side effects."
-        },
-        {
-          "path": "frontend/src/lib/imageEncoding.ts",
-          "operation": "modify",
-          "description": "Replace the empty module with minimal, documented encode/decode helpers (or explicit stubs) used for image payload handling to prevent confusion and future build issues."
-        },
-        {
-          "path": "frontend/src/lib/localPersistence.ts",
-          "operation": "modify",
-          "description": "Replace the empty module with minimal, documented persistence helpers (or explicit stubs) that are safe if imported."
-        },
-        {
-          "path": "frontend/src/lib/simulatedDiscovery.ts",
-          "operation": "modify",
-          "description": "Replace the empty module with a minimal, documented simulated discovery helper (or explicit stubs) that is safe if imported and clarifies intended demo behavior."
+          "description": "Polish Games screen user-facing copy for consistent, professional English (e.g., authentication and connection guidance text, empty states) without altering the screen structure or navigation."
         }
       ]
     }

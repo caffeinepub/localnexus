@@ -127,7 +127,7 @@ export default function AppShell({ children, activeScreen, onScreenChange }: App
       <footer className="border-t border-border/40 bg-muted/30 py-6">
         <div className="container px-4 text-center text-sm text-muted-foreground">
           <p>
-            © {new Date().getFullYear()} LocalNexus. Built with ❤️ using{' '}
+            © {new Date().getFullYear()} LocalNexus. Built with love using{' '}
             <a
               href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(
                 typeof window !== 'undefined' ? window.location.hostname : 'localnexus'
